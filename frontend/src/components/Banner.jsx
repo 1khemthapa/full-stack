@@ -1,8 +1,9 @@
 import React from 'react'
-import { Link } from 'react-router'
 
+import { useNavigate } from 'react-router'
 
 const Banner = () => {
+  const navigate=useNavigate()
   return (
   
         <div>
@@ -15,11 +16,11 @@ const Banner = () => {
         <p className="text-gray-600 text-base md:text-lg mb-4">
           Join thousands of patients who rely on DocTime for easy booking, verified doctors, and personal health tracking. It’s fast, secure, and free to get started.
         </p>
-        <Link to="/signup">
-          <button className="bg-primary text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">
+        
+          <button onClick={()=>navigate('./Login')} className="bg-primary text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">
             Create Your Free Account
           </button>
-        </Link>
+        
       </div>
 
     </div>

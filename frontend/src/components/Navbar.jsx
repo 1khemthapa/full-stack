@@ -50,8 +50,8 @@ const Navbar = () => {
                         </div>
                     </div>
                 </div>
-                : <button onClick={()=>navigate('./Login')} className='py-3 bg-primary text-white px-8  rounded-full font-light hidden md:block'>
-                Create account
+                : <button onClick={()=>navigate('./Login')} className='py-3 bg-primary text-white px-8  rounded-full font-bold hidden md:block'>
+                Login/Signup
             </button>
             }
            
