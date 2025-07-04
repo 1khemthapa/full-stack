@@ -2,39 +2,89 @@ import React, { useContext, useEffect, useState } from 'react'
 import {useParams} from 'react-router-dom'
 import {AppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
-import Calender from '../components/Calender'
+
 const Appointment = () => {
+   const {docId} = useParams()
+    const {doctors, currencySymbol,popUp,setPopUP,} = useContext(AppContext)
+     
+      const daysOfWeek = ['SUN','MON','TUE','WED','THU','FRI','SAT']
+      const monthOfYear = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
   
-  
-  const {docId} = useParams()
-  const {doctors, currencySymbol,popUp,setPopUP,} = useContext(AppContext)
-
-  const [docInfo,setDocInfo] = useState(null)
-  const [docSlots,setDocSlots] = useState([])
-  const [slotIndex,setSlotIndex] = useState(0)
-
-  const fetchDocInfo = async () =>{
-     const docInfo = doctors.find(doc => doc._id === docId)
-     setDocInfo(docInfo)
-     console.log(docInfo)
-  }
-
-  const getAvailableSlots = ()=>{
-      setDocSlots([])
-
-      //current date
-      let today = new Date()
-
-      for(let i=0; i<7; i++){
-        //next 7 days
-        let currentDate = new Date(today)
-        currentDate.setDate(today.getDate()+indexedDB)
-      }
-  }
+      const [docInfo,setDocInfo] = useState(null)
+      const[docSlot,setDocSlot]= useState([])
+      const [slotIndex,setSlotIndex] = useState(0)
+      const[slotTime,setSlotTime] = useState('')
+      
  
-  useEffect(()=>{
-    fetchDocInfo()
-  },[doctors,docId])
+
+
+
+  
+      const fetchDocInfo = async () =>{
+          const docInfo = doctors.find(doc => doc._id === docId)
+          setDocInfo(docInfo)
+            //    console.log(docInfo)
+      }
+  
+      const getAvailableSlots = async () =>{
+       setDocSlot([])
+ 
+       //get new date
+       let today = new Date()
+       
+ 
+ 
+       for(let i=0; i<7;i++){
+          // get next 7 days with index
+      let currentDate = new Date(today)
+      currentDate.setDate(today.getDate()+i)
+  
+      // end time of date
+      let endTime = new Date()
+      endTime.setDate(today.getDate()+i)
+      endTime.setHours(16,0,0,0)
+  
+      // setting hours
+      if(today.getDate() === currentDate.getDate()){
+          currentDate.setHours(currentDate.getHours() > 10 ? currentDate.getHours()+1 : 10)
+          currentDate.setMinutes(currentDate.getMinutes() > 30 ? 30 : 0)
+      }else{
+          currentDate.setHours(10)
+          currentDate.setMinutes(0)
+      }
+  
+      let timeSlots = []
+  
+      while ( currentDate < endTime)
+      {
+          let formattedTime = currentDate.toLocaleTimeString([], { hour:'2-digit',minute:'2-digit'})
+         // add slot to array
+         timeSlots.push({
+          datetime: new Date(currentDate),
+          time: formattedTime
+         })
+  
+         // increase current time by 30 min
+         currentDate.setMinutes(currentDate.getMinutes() + 30)
+      
+      }
+  
+      setDocSlot(prev => ( [...prev, timeSlots]))
+       }
+  
+      }
+  
+      useEffect(()=>{
+           fetchDocInfo()
+      },[doctors,docId])
+  
+      useEffect(()=>{
+      getAvailableSlots()
+      },[docInfo])
+  
+      useEffect(()=>{
+       console.log(docSlot)
+      },[docSlot])
 
   useEffect(()=>{
          getAvailableSlots()
@@ -67,23 +117,64 @@ const Appointment = () => {
         <p className='text-indigo-600 font-medium mt-4'>
           Appointment fee: <span className='text-red-600'>{currencySymbol}{docInfo.fees}</span>
         </p>
-        {
-          !popUp &&
-           <button onClick={()=>setPopUP(true)} className=' item-center gap-2 bg-primary hover:bg-blue-600 px-8 py-3 rounded-full text-white text-sm m-auto md:m-0 hover:scale-105 transition-all duration-300'>Appoint Now</button>
-        }
-      </div>
-      
-      <div>{docSlots}</div>
-     </div>
-       <div className='items-center'>
-        {
-          popUp &&
-          <Calender/>
-         }
-
-       </div>
        
+      </div>
+     
+     </div>
+      
+       {/*---booking---*/}
     
+       <p className="text-xl font-semibold text-blue-700 mt-4 mb-4">Booking Your Slot: {new Date().getFullYear()},{monthOfYear[new Date().getMonth()]} </p>
+       
+{/* date and day */}
+<div className="overflow-x-auto">
+  <table className="w-full table-auto border border-blue-200 rounded-xl overflow-hidden">
+    <thead className="bg-blue-50 text-blue-700">
+      <tr>
+        {docSlot.map((item, index) => (
+          <th
+            key={index}
+            onClick={() => setSlotIndex(index)}
+            className={`cursor-pointer p-4 text-center border border-blue-100 transition-all ${
+              slotIndex === index
+                ? "bg-primary text-white"
+                : "hover:bg-blue-100"
+            }`}
+          >
+            <p className="text-md font-medium">
+              {item[0] && daysOfWeek[item[0].datetime.getDay()]}
+            </p>
+            
+            <p className="text-lg font-bold">
+              {item[0] && item[0].datetime.getDate()}
+            </p>
+          </th>
+        ))}
+      </tr>
+    </thead>
+  </table>
+</div>
+{/* time acc to date */}
+<div className="flex items-center gap-3 w-full overflow-x-scroll hide-scrollbar mt-4">
+  {docSlot.length &&
+    docSlot[slotIndex].map((item, index) => (
+      <div
+        key={index}
+        className={`bg-blue-50  text-blue-700 text-center p-3 rounded-xl border border-blue-200 shadow-sm hover:shadow-md cursor-pointer transition 
+          ${             
+               item.time === slotTime?
+                "bg-primary text-white"
+                : "hover:bg-blue-100"} `}
+      >
+        <p  onClick={()=>setSlotTime(item.time)} className="text-sm  font-semibold  whitespace-nowrap">{item.time.toLowerCase()}</p>
+      
+      </div>
+    ))}
+</div>
+ {
+          !popUp &&
+           <button onClick={()=>setPopUP(true)} className=' item-center gap-2  bg-primary hover:bg-blue-600 px-8 py-3 rounded-full text-white text-sm md:mt-7 hover:scale-105 transition-all duration-300 '>Make Appointment</button>
+        }
     </div>
     
   )

@@ -5,9 +5,9 @@ const DoctorList = () => (
   <section>
     <h2 className="text-2xl font-semibold mb-4">Doctor List</h2>
     { 
-      doctors.map((item, index)=>{
+      doctors.map((item)=>{
        return(
-          <div className='h-14 bg-gray-300 w-100% mb-2 rounded-md flex items-center gap-4 '>
+          <div className='h-14 bg-gray-300 w-[40rem] mb-2 rounded-md flex items-center gap-4 '>
             <img src={item.image} alt=""
             className='h-10 rounded-full ' />
            <p className=''>{item.name}</p>

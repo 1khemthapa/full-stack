@@ -1,39 +1,59 @@
-import React from 'react'
+import React,{useContext} from 'react'
+import { AppContext } from '../context/AppContext';
 
 const MyAppointments = () => {
-  const appointmentToken = 1;
+  // const appointmentToken = 1;
+  const {doctors}=useContext(AppContext)
   return (
 <div className='min-h-screen '>
-  <h1  className="text-2xl font-semibold text-blue-900">Your appointment Recepts:</h1>
-      <div className=' bg-blue-50 p-50 m-100 flex fle justify-center h-full '>
-      {
-          appointmentToken ? (
-           <div className="bg-white p-6 rounded-xl shadow-md m-10">
-          <h2 className="text-2xl font-bold text-blue-700 mb-4">Appointment Recept</h2>
-          <p className="text-gray-600 mb-2">DoctorName:
-            <p className='text-bold '>Raju Yadav</p>
-            </p>
-          <p className="text-gray-600"></p>
-        </div>
-          ) :(
-            
-            <div className="text-center py-10 px-4 text-blue-900">
-           <p className="text-2xl font-semibold mb-2">
-            You don't have any appointments scheduled yet.
-           </p>
-          <p className="text-lg text-blue-700">
-            <button className='bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm font-medium shadow-sm transition'>Book</button>one now to take care of your health!
-          </p>
-          </div>
+  
+  <p className='pb-3 mt-12 font-medium text-2xl text-zinc-800 border-b border-zinc-300'>My Appointments</p>
 
-            // <div className='m-50 p-5'>
-            //    You don't have any appointments scheduled yet. <button className=' bg-blue-600 px-4 py-2 rounded-full text-white text-sm m-auto md:m-0'>Book</button> one now to take care of your health!
-            // </div>
-          )
-      }
-    </div>
-</div>
-  )
-}
+<div className='bg-gray-50 rounded-md mt-6 shadow-sm'>
+  {doctors.slice(0, 3).map((item, index) => (
+    <div
+      className='md:flex grid grid-cols-[1fr_2fr] md:grid-cols-none gap-4 p-4 border-b hover:bg-white transition-all duration-300'
+      key={index}
+    >
+      
+      <div className='flex-shrink-0'>
+        <img
+          className='w-28 h-28 object-cover rounded-md border bg-indigo-50 shadow-sm'
+          src={item.image}
+          alt={item.name}
+        />
+      </div>
+
+      
+      <div className='flex-1 text-sm text-zinc-700'>
+        <p className='text-lg font-semibold text-neutral-800'>{item.name}</p>
+        <p className='text-sm mb-1'>{item.speciality}</p>
+
+        <p className='text-sm font-medium mt-2 text-zinc-800'>Address:</p>
+        <p className='text-xs text-zinc-600'>{item.address.line1}</p>
+        <p className='text-xs text-zinc-600'>{item.address.line2}</p>
+
+        <p className='text-xs mt-3 text-zinc-700'>
+          <span className='font-medium text-sm'>Date & Time:</span> 03, July 2025 | 11:24 PM
+        </p>
+      </div>
+
+      
+      <div className='flex flex-col gap-2 justify-end mt-4 md:mt-0'>
+        <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
+          Pay Online
+        </button>
+        <button className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
+          Cancel Appointment
+        </button>
+      </div>
+    </div>))
+  }
+  </div>
+  </div>
+)
+  }
+
+
 
 export default MyAppointments
