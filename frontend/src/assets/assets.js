@@ -6,7 +6,7 @@ import contact_image from './contact_image.png'
 import about_image from './about_image.png'
 import logo from './logo.png'
 import dropdown_icon from './dropdown_icon.svg'
-import menu_icon from './menu_icon.svg'
+import menu_icon from './menu_icon.png'
 import cross_icon from './cross_icon.png'
 import chats_icon from './chats_icon.svg'
 import verified_icon from './verified_icon.svg'
@@ -46,6 +46,7 @@ import Secure from './secure.jpg'
 import Delete from './delete.png'
 import loginimg from './login.jpg'
 import signupimg from './signupimg.jpg'
+import profileIcon from './profile_icon.png'
 
 export const assets = {
     appointment_img,
@@ -70,7 +71,8 @@ export const assets = {
     Secure,
     Delete,
     loginimg,
-    signupimg
+    signupimg,
+    profileIcon
 }
   // DoctorSpecialties.jsx
 

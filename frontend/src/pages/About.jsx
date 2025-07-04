@@ -1,6 +1,6 @@
 import React from 'react';
 import { FaUserMd, FaClinicMedical, FaCalendarCheck, FaSmile } from 'react-icons/fa';
-
+import { assets } from '../assets/assets';
 const About = () => {
   return (
     <section className="bg-white text-gray-800 py-16 px-6 md:px-20">
@@ -27,7 +27,7 @@ const About = () => {
         {/* Image */}
         <div className="flex justify-center md:justify-end">
           <img
-            src="/path/to/about-illustration.png" // Replace with actual path
+            src={assets.about_image}
             alt="Doctor Consultation"
             className="w-full max-w-md rounded-xl shadow-md border border-blue-100"
           />

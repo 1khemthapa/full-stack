@@ -93,7 +93,7 @@ const MyProfile = () => {
             <div className="flex items-center space-x-6">
               <label className="relative cursor-pointer">
                 <img
-                  src={assets.ProfileIcon}
+                  src={assets.profileIcon}
                   alt="avatar"
                   className="w-24 h-24 rounded-full border-4 border-white shadow"
                 />
