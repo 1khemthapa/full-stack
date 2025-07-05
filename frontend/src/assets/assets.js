@@ -47,6 +47,7 @@ import Delete from './delete.png'
 import loginimg from './login.jpg'
 import signupimg from './signupimg.jpg'
 import profileIcon from './profile_icon.png'
+import Our_mission from './our_mission.png'
 
 export const assets = {
     appointment_img,
@@ -72,7 +73,8 @@ export const assets = {
     Delete,
     loginimg,
     signupimg,
-    profileIcon
+    profileIcon,
+    Our_mission
 }
   // DoctorSpecialties.jsx
 

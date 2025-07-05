@@ -64,7 +64,7 @@ const About = () => {
       <div className="mt-24 max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div className="flex justify-center md:justify-start">
           <img
-            src="/path/to/mission-image.png" // Replace with actual path
+            src={assets.Our_mission}
             alt="Our Mission"
             className="w-full max-w-md rounded-xl shadow border border-blue-100"
           />

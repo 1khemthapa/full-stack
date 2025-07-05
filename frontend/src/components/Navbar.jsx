@@ -36,11 +36,11 @@ const Navbar = () => {
                 <hr className='border-none outline-none h-0.5 bg-primary w-3/5 m-auto hidden'/>
             </NavLink>
         </ul>
-        <div className="flex-item-center gap-4">
+        <div className="flex item-center gap-4">
             {
                 token
                 ?<div className='flex item-center gap-2 cursor-pointer group relative'>
-                    <img className='w-8 rounded-full' src={assets.profileIcon} alt="" />
+                    <img className='w-12 h-auto rounded-full' src={assets.profileIcon} alt="" />
                     <img className='w-2.5' src={assets.dropdown_icon} alt="" />
                     <div className='absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block'>
                         <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4'>
@@ -56,7 +56,7 @@ const Navbar = () => {
             }
            <img onClick={()=>setShowMenu(true)} className='w-6 md:hidden' src={assets.menu_icon} alt="" />
            {/* for mobile */}
-           <div className={`${showMenu ? 'fixed w-full':'h-0 w-0'} md:hidden right-0 top-0 bottom-0`}>
+           <div className={`${showMenu ? 'fixed w-full':'h-0 w-0'} md:hidden right-0 top-0 bottom-0 z-0 overflow-hidden bg-white transition-all`}>
             <div className='flex item-center justify-between px-5 py-6'>
                 <img className='w-36' src={assets.logo} alt="" />
                 <img className='w-7' onClick={()=>setShowMenu(false)} src={assets.cross_icon} alt="" />
