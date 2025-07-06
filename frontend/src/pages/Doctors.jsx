@@ -1,5 +1,5 @@
 
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { specialties } from '../assets/assets';
 import { doctors } from '../assets/assets';
@@ -12,7 +12,7 @@ const Doctors = () => {
   const filteredDoctors = doctors.filter(
     (doc) => doc.speciality === selectedSpecialty
   );
-  const {speciality} = useParams()
+  
   const navigate = useNavigate()
 useEffect(()=>{
      

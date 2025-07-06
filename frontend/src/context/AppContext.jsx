@@ -8,12 +8,14 @@ const AppContentProvider = (props)=>{
 
    const currencySymbol = 'Rs'
 
-
+    const [token, setToken]= useState(true)
     const value = {
          doctors,
          currencySymbol,
          popUp,
          setPopUP,
+         token,
+         setToken
     }
 
     return(
