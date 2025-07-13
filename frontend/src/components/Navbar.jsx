@@ -68,9 +68,9 @@ const Navbar = () => {
             </div>
             <ul className='flex flex-col item-center gap-2 mt-5 px-5 text-lg font-medium'>
                 <NavLink onClick={()=>setShowMenu(false)} to='/'>Home</NavLink>
-                <NavLink onClick={()=>setShowMenu(false)} to='.doctors'>Doctors</NavLink>
-                <NavLink onClick={()=>setShowMenu(false)}to='.about'>About</NavLink>
-                <NavLink onClick={()=>setShowMenu(false)} to='.contact'>Contact</NavLink>
+                <NavLink onClick={()=>setShowMenu(false)} to='/doctors'>Doctors</NavLink>
+                <NavLink onClick={()=>setShowMenu(false)}to='/about'>About</NavLink>
+                <NavLink onClick={()=>setShowMenu(false)} to='/contact'>Contact</NavLink>
             </ul>
            </div>
         </div>

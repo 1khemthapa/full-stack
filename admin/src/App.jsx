@@ -40,6 +40,7 @@ import Dashboard from './pages/Admin/Dashboard';
 import DoctorList from './pages/Admin/DoctorList';
 import AddDoctor from './pages/Admin/AddDoctor';
 import AllApointments from './pages/Admin/AllApointments'
+import PostCamp from './pages/Admin/PostCamp';
 
 
 

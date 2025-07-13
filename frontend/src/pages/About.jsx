@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { FaUserMd, FaClinicMedical, FaCalendarCheck, FaSmile } from 'react-icons/fa';
 import { assets } from '../assets/assets';
 import {useNavigate } from "react-router";
+import { AppContext } from '../context/AppContext';
 const About = () => {
   const navigate=useNavigate()
+  const { token} = useContext(AppContext)
   return (
     <section className="bg-white text-gray-800 py-16 px-6 md:px-20">
       <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -21,9 +23,13 @@ const About = () => {
           <p className="text-base text-gray-500 mb-6">
             With real-time availability, easy appointment scheduling, and a wide range of specialties, Doctime empowers you to take control of your health from the comfort of your home.
           </p>
-          <button onClick={()=>navigate('/Login')} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
+          {
+           token 
+           ?""
+           :<button onClick={()=>navigate('/Login')} className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300">
             Create an Account
           </button>
+          }
         </div>
 
         {/* Image */}

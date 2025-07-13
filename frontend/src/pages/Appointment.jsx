@@ -1,15 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react'
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {AppContext } from '../context/AppContext'
 import { assets } from '../assets/assets'
+import { toast } from 'react-toastify'
+import axios from 'axios'
 
 const Appointment = () => {
    const {docId} = useParams()
-    const {doctors, currencySymbol,popUp,setPopUP,} = useContext(AppContext)
+    const {doctors, currencySymbol,popUp,setPopUP,backendUrl, token,getDoctorsData } = useContext(AppContext)
      
       const daysOfWeek = ['SUN','MON','TUE','WED','THU','FRI','SAT']
       const monthOfYear = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
   
+      const navigate = useNavigate()
+
       const [docInfo,setDocInfo] = useState(null)
       const[docSlot,setDocSlot]= useState([])
       const [slotIndex,setSlotIndex] = useState(0)
@@ -72,6 +76,38 @@ const Appointment = () => {
       setDocSlot(prev => ( [...prev, timeSlots]))
        }
   
+      }
+
+      const bookAppointment = async () =>{
+
+        if (!token) {
+          toast.warn('Login to Book Appointment')
+          return navigate('/login')
+        }
+
+        try {
+          
+        const date = docSlot[slotIndex][0].datetime
+
+        let day = date.getDate()
+        let month = date.getDate()+1
+        let year = date.getFullYear()
+
+        const slotDate = day + "_" + month + "_" + year
+
+        const { data } = await axios.post(backendUrl + '/api/user/book-appointment', {docId, slotDate, slotTime},{headers:{token}})
+        if (data.success) {
+          toast.success(data.message)
+          getDoctorsData()
+          navigate('/my-appointment') 
+        } else{
+          toast.error(data.message)
+        }
+
+        } catch (error) {
+          console.log(error)
+          toast.error(error.message)
+        }
       }
   
       useEffect(()=>{
@@ -171,10 +207,7 @@ const Appointment = () => {
       </div>
     ))}
 </div>
- {
-          !popUp &&
-           <button onClick={()=>setPopUP(true)} className=' item-center gap-2  bg-primary hover:bg-blue-600 px-8 py-3 rounded-full text-white text-sm md:mt-7 hover:scale-105 transition-all duration-300 '>Make Appointment</button>
-        }
+           <button onClick={bookAppointment} className=' item-center gap-2  bg-primary hover:bg-blue-600 px-8 py-3 rounded-full text-white text-sm md:mt-7 md:mb-5 hover:scale-105 transition-all duration-300 '>Make Appointment</button>
     </div>
     
   )

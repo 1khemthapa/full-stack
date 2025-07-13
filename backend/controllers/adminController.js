@@ -81,4 +81,7 @@ const allDoctors = async (req,res) =>{
         res.json({success:false,message: error.message})
     }
 };
+
 export {addDoctor,loginAdmin,allDoctors}
+
+

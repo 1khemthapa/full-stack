@@ -1,7 +1,21 @@
 import React from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+  import emailjs from 'emailjs-com';
 
 const Contact = () => {
+
+
+const sendEmail = (e) => {
+  e.preventDefault();
+
+  emailjs.sendForm('service_id', 'template_id', e.target, 'user_api_key')
+    .then((result) => {
+      console.log(result.text);
+    }, (error) => {
+      console.log(error.text);
+    });
+};
+
   return (
     <section className="bg-blue-50 py-16 px-6 md:px-20 text-gray-800">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
@@ -15,7 +29,7 @@ const Contact = () => {
           <div className="space-y-4 mt-6">
             <div className="flex items-center gap-4">
               <FaPhone className="text-blue-600 text-xl" />
-              <span className="text-gray-700">+1 (800) 123-4567</span>
+              <span className="text-gray-700">+977 9800000000</span>
             </div>
             <div className="flex items-center gap-4">
               <FaEnvelope className="text-blue-600 text-xl" />
@@ -23,7 +37,7 @@ const Contact = () => {
             </div>
             <div className="flex items-center gap-4">
               <FaMapMarkerAlt className="text-blue-600 text-xl" />
-              <span className="text-gray-700">123 Health Street, Wellness City, USA</span>
+              <span className="text-gray-700">Bhairahawa, Rupandehi, Nepal</span>
             </div>
           </div>
         </div>
@@ -44,7 +58,7 @@ const Contact = () => {
               <label className="block text-sm text-gray-600 mb-1">Message</label>
               <textarea className="w-full border border-gray-300 px-4 py-2 h-32 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Write your message here..."></textarea>
             </div>
-            <button type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
+            <button onClick={sendEmail} type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
               Send Message
             </button>
           </form>

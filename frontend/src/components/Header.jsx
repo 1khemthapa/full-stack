@@ -1,8 +1,11 @@
 import React from 'react'
 import { assets } from '../assets/assets'
 import { useNavigate } from 'react-router'
+import { useContext } from 'react'
+import { AppContext } from '../context/AppContext'
 
 const Header = () => {
+const {token, setToken} = useContext(AppContext)
 const navigate=useNavigate()
   return (
     // <div className='flex flex-col md:flex-row flex-wrap bg-primary rounded-lg px-6 md:px-6 lg:px-6 '>
@@ -34,9 +37,15 @@ const navigate=useNavigate()
         <p className="text-lg max-w-xl mx-auto">
           Seamlessly connect with healthcare providers. Book, manage, and track appointments — all in one place.
         </p>
-        <button onClick={()=>navigate("./Login")} className="mt-8 bg-white text-[#7494EC] px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-100 transition">
+        {
+          token 
+          ? <button onClick={()=>navigate("/doctors")} className="mt-8 bg-white text-[#7494EC] px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-100 transition">
+          Appoint Now
+        </button>
+          :<button onClick={()=>navigate("/Login")} className="mt-8 bg-white text-[#7494EC] px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-blue-100 transition">
           Get Started
         </button>
+        }
       </section>
 
       {/* Features Section */}

@@ -61,7 +61,7 @@ const AppContentProvider = (props)=>{
     const value = {
   popUp,
   setPopUP,
-  doctors,
+  doctors,getDoctorsData,
   userData,
   setUserData,
   currencySymbol,

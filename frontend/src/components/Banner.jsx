@@ -20,11 +20,11 @@ const Banner = () => {
           Join thousands of patients who rely on DocTime for easy booking, verified doctors, and personal health tracking. It’s fast, secure, and free to get started.
         </p>
         { token ?
-        <button onClick={()=>navigate('./Login')} className="bg-primary text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">
+        <button onClick={()=>navigate('/doctors')} className="bg-primary text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">
             Get Appointment
           </button>:
 
-         <button onClick={()=>navigate('./Login')} className="bg-primary text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">
+         <button onClick={()=>navigate('/Login')} className="bg-primary text-white font-semibold px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition">
             Create Your Free Account
           </button>
         }
