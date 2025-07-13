@@ -71,4 +71,14 @@ catch(error){
         res.json({success:false,message:error.message})
 }
 }
-export {addDoctor,loginAdmin}
+
+// Api to get all doctor in adminpanel
+const allDoctors = async (req,res) =>{
+    try {
+        const doctors = await doctorModel.find({}).select('-password')
+        res.json({success:true,doctors})
+    } catch (error) {
+        res.json({success:false,message: error.message})
+    }
+};
+export {addDoctor,loginAdmin,allDoctors}

@@ -1,11 +1,14 @@
 
 import { useNavigate} from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { specialties } from '../assets/assets';
-import { doctors } from '../assets/assets';
+// import { doctors } from '../assets/assets';
+
 import React from 'react'
+import { AppContext } from '../context/AppContext';
 
 const Doctors = () => {
+  const {doctors} = useContext(AppContext)
    const specialtyList = specialties.map((s) => s.speciality);
   const [selectedSpecialty, setSelectedSpecialty] = useState(specialtyList[0]);
  

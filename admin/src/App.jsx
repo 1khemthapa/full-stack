@@ -37,7 +37,7 @@ import Navbar from './component/Navbar';
 import Sidebar from './component/Sidebar';
 import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Admin/Dashboard';
-import DoctorList from './components/DoctorList';
+import DoctorList from './pages/Admin/DoctorList';
 import AddDoctor from './pages/Admin/AddDoctor';
 import AllApointments from './pages/Admin/AllApointments'
 

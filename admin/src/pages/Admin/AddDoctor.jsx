@@ -70,7 +70,7 @@ const AddDoctor = () => {
     }
 
   return (
-    <form  onSubmit={onSubmitHandler} className="bg-white px-4 sm:px-6 md:px-8 py-6 rounded-lg shadow-md max-w-6xl w-full mx-auto mt-6 space-y-6">
+    <form  onSubmit={onSubmitHandler} className="bg-blue-50 px-4 sm:px-6 md:px-8 py-6 rounded-lg shadow-md max-w-6xl w-full mx-auto mt-6 space-y-6">
       <h2 className="text-xl sm:text-2xl font-semibold text-[#7494EC] text-center">Add Doctor</h2>
 
       {/* Upload area */}

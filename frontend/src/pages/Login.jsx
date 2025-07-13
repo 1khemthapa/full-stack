@@ -1,81 +1,166 @@
+import { useState, useContext, useEffect } from 'react';
+import axios from 'axios';
+import { AppContext } from '../context/AppContext';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
-import {assets} from '../assets/assets';
-import { useState } from 'react';
 const Login = () => {
-  const [login,setLogin]=useState(true)
-  const toggleForm=()=>{
-    setLogin(!login)
-  }
+  const { backendUrl, setToken,token } = useContext(AppContext);
+  const navigate = useNavigate();
+
+  const [state, setState] = useState('login');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+
+  const toggleForm = () => {
+    setState(state === 'login' ? 'sign up' : 'login');
+    setEmail('');
+    setPassword('');
+    setName('');
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    try {
+     
+      if (state === 'login') {
+        const { data } = await axios.post(backendUrl + '/api/user/login', { email, password });
+        
+      if (data.success && data.token) {
+        localStorage.setItem('token', data.token);
+        setToken(data.token);
+        toast.success('Authentication successful!');
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+      } else {
+        const { data } = await axios.post(backendUrl + '/api/user/register', { name, email, password });
+        if (data.success && data.token) {
+        localStorage.setItem('token', data.token);
+        setToken(data.token);
+        toast.success('Authentication successful!');
+        navigate('/Login');
+      } else {
+        toast.error(data.message || "Something went wrong");
+      }
+      }
+
+    } catch (error) {
+      toast.error(error.response?.data?.message || error.message);
+    }
+  };
+
+  useEffect(()=>{
+    if(token){
+     navigate('/')
+    }
+  },[token])
+
   return (
-  
-    <div>
-      {/*login form */}
-      {login ?(
-    <form>
-    <div className=' h-screen flex flex-col  items-center bg-gradient-to-r from-blue-800 to-blue-300'>
-      <p className='font-bold text-3xl  text-white text-center sm:mt-32 mt-[120px]'>Login to your account</p>
+    <form onSubmit={onSubmitHandler} className="h-screen flex flex-col items-center bg-gradient-to-r from-blue-800 to-blue-300 p-4">
+      <p className="font-bold text-3xl text-white text-center mt-24 mb-8">
+        {state === 'login' ? 'Login to your account' : 'Sign up for a new account'}
+      </p>
 
-      {/*image and container for login page */}
-      <div className='flex  md:w-[55rem] md:h-[26rem] sm:w-[15rem] sm:h-[25rem]  sm:mt-[5px]  justify-center mt-2 h-[25rem] '>
+      <div className="bg-white rounded-xl shadow-lg p-8 w-full max-w-md">
+        {state === 'login' ? (
+          <>
+            <label htmlFor="email" className="block text-lg mb-2">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="email"
+              required
+              className="w-full h-10 border-2 rounded p-2 mb-4 text-lg"
+            />
 
-      
-      <img src={assets.loginimg} className='md:h-[25rem] hidden sm:block rounded-l-xl 'alt="img" />
+            <label htmlFor="password" className="block text-lg mb-2">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="password"
+              required
+              className="w-full h-10 border-2 rounded p-2 mb-6 text-lg"
+            />
 
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white text-lg py-2 rounded hover:bg-blue-400 transition"
+            >
+              Login
+            </button>
 
-      {/*container for login-page */}
-      <div className='bg-white border-2 border-l-0 p-3 sm:p-0  sm:w-[25rem] sm:h-[25rem] flex sm:rounded-none sm:rounded-r-xl rounded-xl'>
-      <div className='flex flex-col mt-4 '>
-          <label htmlFor="username" className='text-lg mb-2'>Username</label>
-            <input className='text-lg mb-2 h-10 border-2 rounded p-1' type="text"placeholder="username" />
-          <label htmlFor="email" className='text-lg mb-2'>Email</label>
-            <input className='text-lg mb-2 h-10 border-2 rounded p-1' type="email"placeholder="email" />
-          <label htmlFor="password" className='mb-2 text-lg'>Password</label>
-            <input type="password" placeholder='password' className='text-lg mb-2 h-10 border-2 rounded p-1' />
-        <button className='bg-blue-500 text-white text-lg mt-2 mb-2 h-10 rounded cursor-pointer hover:bg-blue-300 hover'>Login</button>
-        <p className='mt-2'>Not Registered yet? <a onClick={toggleForm} className='cursor-pointer hover:text-blue-300 text-blue-500'>Sign up</a></p>
-        
-     </div>
-     
-    </div>
+            <p className="mt-4 text-center text-gray-600">
+              Not registered yet?{' '}
+              <span
+                onClick={toggleForm}
+                className="text-blue-500 cursor-pointer hover:text-blue-400"
+              >
+                Sign up
+              </span>
+            </p>
+          </>
+        ) : (
+          <>
+            <label htmlFor="name" className="block text-lg mb-2">Username</label>
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              placeholder="username"
+              required
+              className="w-full h-10 border-2 rounded p-2 mb-4 text-lg"
+            />
 
-     
-    </div>
+            <label htmlFor="email" className="block text-lg mb-2">Email</label>
+            <input
+              id="email"
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder="email"
+              required
+              className="w-full h-10 border-2 rounded p-2 mb-4 text-lg"
+            />
 
+            <label htmlFor="password" className="block text-lg mb-2">Password</label>
+            <input
+              id="password"
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              placeholder="password"
+              required
+              className="w-full h-10 border-2 rounded p-2 mb-6 text-lg"
+            />
+
+            <button
+              type="submit"
+              className="w-full bg-blue-500 text-white text-lg py-2 rounded hover:bg-blue-400 transition"
+            >
+              Sign up
+            </button>
+
+            <p className="mt-4 text-center text-gray-600">
+              Already registered?{' '}
+              <span
+                onClick={toggleForm}
+                className="text-blue-500 cursor-pointer hover:text-blue-400"
+              >
+                Login
+              </span>
+            </p>
+          </>
+        )}
       </div>
-      </form>)
-      :
-      (
-<form>
-    <div className=' h-screen flex flex-col  items-center bg-gradient-to-r from-blue-800 to-blue-300'>
-      <p className='font-bold text-3xl  text-white text-center sm:mt-32 mt-[120px]'>Signin to your new account</p>
+    </form>
+  );
+};
 
-      {/*image and container for signin page */}
-      <div className='flex  md:w-[55rem] md:h-[26rem] sm:w-[15rem] sm:h-[25rem]  sm:mt-[5px]  justify-center mt-2 h-[25rem] transition-3s '>
-
-        <img src={assets.signupimg} className='md:h-[25rem] hidden sm:block rounded-l-xl'alt="img" />
-
-      {/*container for login-page */}
-      <div className='bg-white border-2 border-l-0 p-3 sm:p-0  sm:w-[25rem] sm:h-[25rem] flex rounded-xl sm:rounded-none sm:rounded-r-xl '>
-      <div className='flex flex-col mt-4 '>
-          <label htmlFor="username" className='text-lg mb-2'>Username</label>
-            <input className='text-lg mb-2 h-10 border-2 rounded p-1' type="text"placeholder="username" />
-          <label htmlFor="email" className='text-lg mb-2'>Email</label>
-            <input className='text-lg mb-2 h-10 border-2 rounded p-1' type="email"placeholder="email" />
-          <label htmlFor="password" className='mb-2 text-lg'>Password</label>
-            <input type="password" placeholder='password' className='text-lg mb-2 h-10 border-2 rounded p-1' />
-        <button className='bg-blue-500 text-white text-lg mt-2 mb-2 h-10 rounded cursor-pointer hover:bg-blue-300'>Sign up</button>
-        <p className='mt-2'>Already Registered? <span onClick={toggleForm} className='cursor-pointer hover:text-blue-300 text-blue-500'>Login</span></p>
-        
-     </div>
-     
-    </div>
-    </div>
-
-      </div>
-      </form>
-    
-      )}
-      </div>
-      )
-}
 export default Login;
