@@ -15,7 +15,6 @@ const MyProfile = () => {
             const formData = new FormData()
 
             formData.append('name',userData.name)
-            console.log(name)
             formData.append('phone',userData.phone)
             formData.append('address',JSON.stringify(userData.address))
             formData.append('gender',userData.gender)

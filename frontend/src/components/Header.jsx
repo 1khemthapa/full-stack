@@ -35,7 +35,7 @@ const navigate=useNavigate()
       <section className="text-center px-6 py-20 bg-[#7494EC] text-white rounded-2xl shadow-xl">
         <h1 className="text-5xl font-extrabold leading-tight mb-4">Your Health, Our Mission</h1>
         <p className="text-lg max-w-xl mx-auto">
-          Seamlessly connect with healthcare providers. Book, manage, and track appointments — all in one place.
+          Seamlessly connect with healthcare providers. Book and manage appointments — all in one place.
         </p>
         {
           token 
@@ -76,7 +76,7 @@ const navigate=useNavigate()
               alt="Easy Booking"
               className="mx-auto mb-4 h-40"
             />
-            <h3 className="text-xl font-semibold mb-2">Mobile Friendly</h3>
+            <h3 className="text-xl font-semibold mb-2">User Friendly</h3>
             <p className="text-gray-600 text-sm">Use our system easily on any device.</p>
           </div>
 

@@ -90,7 +90,7 @@ const Appointment = () => {
         const date = docSlot[slotIndex][0].datetime
 
         let day = date.getDate()
-        let month = date.getDate()+1
+        let month = date.getMonth()+1
         let year = date.getFullYear()
 
         const slotDate = day + "_" + month + "_" + year
@@ -99,7 +99,7 @@ const Appointment = () => {
         if (data.success) {
           toast.success(data.message)
           getDoctorsData()
-          navigate('/my-appointment') 
+          navigate('/myappointment') 
         } else{
           toast.error(data.message)
         }

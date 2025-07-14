@@ -1,16 +1,66 @@
 import React,{useContext} from 'react'
 import { AppContext } from '../context/AppContext';
+import { useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useEffect } from 'react';
 
 const MyAppointments = () => {
   // const appointmentToken = 1;
-  const {doctors}=useContext(AppContext)
+  const {backendUrl,token, getDoctorsData} = useContext(AppContext)
+
+  const [appointments,setAppointments] = useState([])
+  const month = ['','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
+  
+  const getUserAppointments = async ()=>{
+       try {
+        
+           const {data} = await axios.get(backendUrl + '/api/user/appointments',{headers:{token}})
+           
+           if (data.success) {
+            setAppointments(data.appointments.reverse())
+            
+           }
+       } catch (error) {
+        console.log(error)
+        toast.error(error.message)
+       }
+  }
+  
+const slotDateFormat = (slotDate) =>{
+  const dateArray = slotDate.split('_')
+  return dateArray[0]+ " " + month[Number(dateArray[1])] + " " + dateArray[2]
+}
+
+const cancelAppointment = async (appointmentId) =>{
+  try {
+    
+    const {data} = await axios.post(backendUrl + '/api/user/cancel-appointment',{appointmentId},{headers:{token}})
+    if (data.success) {
+      toast.success(data.message)
+      getUserAppointments()
+      getDoctorsData()
+    }else{
+       toast.error(data.message)
+    }
+
+  } catch (error) {
+     console.log(error)
+        toast.error(error.message)
+  }
+}
+  useEffect(()=>{
+    if (token) {
+      getUserAppointments()
+    }
+  },[token])
   return (
 <div className='min-h-screen '>
   
   <p className='pb-3 mt-12 font-medium text-2xl text-zinc-800 border-b border-zinc-300'>My Appointments</p>
 
 <div className='bg-gray-50 rounded-md mt-6 shadow-sm'>
-  {doctors.slice(0, 3).map((item, index) => (
+  {appointments.map((item, index) => (
     <div
       className='md:flex grid grid-cols-[1fr_2fr] md:grid-cols-none gap-4 p-4 border-b hover:bg-white transition-all duration-300'
       key={index}
@@ -19,33 +69,36 @@ const MyAppointments = () => {
       <div className='flex-shrink-0'>
         <img
           className='w-28 h-28 object-cover rounded-md border bg-indigo-50 shadow-sm'
-          src={item.image}
+          src={item.docData.image}
           alt={item.name}
         />
       </div>
 
       
       <div className='flex-1 text-sm text-zinc-700'>
-        <p className='text-lg font-semibold text-neutral-800'>{item.name}</p>
-        <p className='text-sm mb-1'>{item.speciality}</p>
+        <p className='text-lg font-semibold text-neutral-800'>{item.docData.name}</p>
+        <p className='text-sm mb-1'>{item.docData.speciality}</p>
 
         <p className='text-sm font-medium mt-2 text-zinc-800'>Address:</p>
-        <p className='text-xs text-zinc-600'>{item.address.line1}</p>
-        <p className='text-xs text-zinc-600'>{item.address.line2}</p>
+        <p className='text-xs text-zinc-600'>{item.docData.address.address1}</p>
+        <p className='text-xs text-zinc-600'>{item.docData.address.address2}</p>
 
         <p className='text-xs mt-3 text-zinc-700'>
-          <span className='font-medium text-sm'>Date & Time:</span> 03, July 2025 | 11:24 PM
+          <span className='font-medium text-sm'>Date & Time:</span>{slotDateFormat(item.slotDate)} | {item.slotTime}
         </p>
       </div>
 
       
-      <div className='flex flex-col gap-2 justify-end mt-4 md:mt-0'>
-        <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
+      <div className='flex flex-col gap-2 justify-end items-center mt-4 md:mt-0'>
+       {!item.cancelled && <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
           Pay Online
-        </button>
-        <button className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
-          Cancel Appointment
-        </button>
+        </button> } 
+        {!item.cancelled && <button onClick={()=>cancelAppointment(item._id)} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
+          Cancel Appointment 
+        </button> }
+        {item.cancelled && <p className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
+          Booking cancelled  
+        </p>}
       </div>
     </div>))
   }

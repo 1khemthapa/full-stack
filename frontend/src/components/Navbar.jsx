@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router'
 import {AppContext} from '../context/AppContext'
 const Navbar = () => {
     const navigate = useNavigate()
+    const {userData} = useContext(AppContext)
     
     const [showMenu, setShowMenu] = useState(false)
     const {token, setToken}= useContext(AppContext)
@@ -45,12 +46,12 @@ const Navbar = () => {
             {
                 token
                 ?<div className='flex item-center gap-2 cursor-pointer group relative'>
-                    <img className='w-12 h-auto rounded-full' src={assets.profileIcon} alt="" />
+                    <img className='w-12 h-12 rounded-full object-cover border-2 border-blue-500'  src={userData.image?userData.image:assets.profileIcon} alt="" />
                     <img className='w-2.5' src={assets.dropdown_icon} alt="" />
                     <div className='absolute top-0 right-0 pt-14 text-base font-medium text-gray-600 z-20 hidden group-hover:block'>
                         <div className='min-w-48 bg-stone-100 rounded flex flex-col gap-4 p-4'>
                             <p onClick={()=>navigate('myProfile')} className='hover:text-black cursor-pointer'>My Profile</p>
-                            <p onClick={()=>navigate('MyAppointment')} className='hover:text-black cursor-pointer'>My Appointment</p>
+                            <p onClick={()=>navigate('myappointment')} className='hover:text-black cursor-pointer'>My Appointment</p>
                             <p onClick={logout} className='hover:text-black cursor-pointer'>Logout</p>
                         </div>
                     </div>
