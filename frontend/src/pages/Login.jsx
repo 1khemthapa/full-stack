@@ -94,6 +94,9 @@ const Login = () => {
             >
               Login
             </button>
+            <p className='mt-5 flex flex-row justify-center items-center'>
+              Are you <a  href="http://localhost:5174/login" className="ml-1 text-blue-600 underline">Admin</a>?
+             </p>
 
             <p className="mt-4 text-center text-gray-600">
               Not registered yet?{' '}
@@ -146,6 +149,7 @@ const Login = () => {
             >
               Sign up
             </button>
+            
 
             <p className="mt-4 text-center text-gray-600">
               Already registered?{' '}
@@ -155,7 +159,9 @@ const Login = () => {
               >
                 Login
               </span>
+              
             </p>
+            
           </>
         )}
       </div>

@@ -17,54 +17,68 @@ const sendEmail = (e) => {
 };
 
   return (
-    <section className="bg-blue-50 py-16 px-6 md:px-20 text-gray-800">
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-start">
-        {/* Contact Information */}
-        <div>
-          <h2 className="text-4xl font-bold text-blue-700 mb-6">Get in Touch</h2>
-          <p className="text-gray-600 mb-4">
-            We'd love to hear from you. Whether you have a question about our platform, need support, or just want to connect — feel free to reach out!
-          </p>
+     <div className="min-h-screen bg-blue-50 py-10 px-6 flex flex-col items-center gap-50">
+      <div className="w-full max-w-6xl bg-white rounded-2xl shadow-xl p-8 md:p-12">
 
-          <div className="space-y-4 mt-6">
-            <div className="flex items-center gap-4">
-              <FaPhone className="text-blue-600 text-xl" />
-              <span className="text-gray-700">+977 9800000000</span>
+        <h1 className="text-3xl md:text-4xl font-bold text-blue-700 mb-4 text-center">
+          Contact DocTime Support
+        </h1>
+        <p className="text-center text-gray-600 max-w-2xl mx-auto mb-8">
+          Have questions or need help with booking appointments? Our support team is available to assist you.
+          Reach out via phone, email, or visit us at our office location.
+        </p>
+
+        {/* Team Members */}
+        <div className="flex flex-wrap justify-center gap-8 mb-12">
+          {[
+            { name: "Sandeep Adhikari", role: "CEO & Founder" },
+            { name: "Prakash Koirala", role: "Chief Technology Officer" },
+            { name: "Binita Shrestha", role: "Operations Head" },
+          ].map((member, idx) => (
+            <div key={idx} className="bg-blue-50 rounded-xl shadow p-6 flex flex-col items-center w-64">
+              {/* This div is for image */}
+              <div className="w-32 h-32 rounded-full bg-gray-200 mb-4 flex items-center justify-center text-gray-500">
+                {/* Image Placeholder */}
+                IMG
+              </div>
+              <h3 className="text-lg font-bold text-gray-800">{member.name}</h3>
+              <p className="text-sm text-blue-600">{member.role}</p>
             </div>
-            <div className="flex items-center gap-4">
-              <FaEnvelope className="text-blue-600 text-xl" />
-              <span className="text-gray-700">support@doctime.com</span>
-            </div>
-            <div className="flex items-center gap-4">
-              <FaMapMarkerAlt className="text-blue-600 text-xl" />
-              <span className="text-gray-700">Bhairahawa, Rupandehi, Nepal</span>
-            </div>
+          ))}
+        </div>
+
+        {/* Location and Map */}
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="space-y-4">
+            <h2 className="text-2xl font-semibold text-blue-600">Office Location</h2>
+            <p className="text-gray-700">
+              DocTime Pvt. Ltd.<br />
+              Bhairahawa, Rupandehi, Nepal
+            </p>
+            <p className="text-gray-700">
+              Phone: +977-980000000<br />
+              Email: support@doctime.com
+            </p>
+          </div>
+
+          <div className="overflow-hidden rounded-xl shadow-md">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d226484.25278052074!2d83.20057402499998!3d27.506083299999993!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39969a339eb1bae7%3A0xf0366eebfe16f3b7!2sBhairahawa%20Bahumukhi%20Campus!5e0!3m2!1sen!2snp!4v1752588628680!5m2!1sen!2snp"
+              width="100%"
+              height="350"
+              allowFullScreen
+              loading="lazy"
+              title="DocTime Office Location"
+              className="w-full h-full border-0"
+            ></iframe>
+            
           </div>
         </div>
 
-        {/* Contact Form */}
-        <div className="bg-white p-8 rounded-xl shadow">
-          <h3 className="text-2xl font-semibold text-blue-700 mb-4">Send us a Message</h3>
-          <form className="space-y-4">
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Name</label>
-              <input type="text" className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Your Name" />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Email</label>
-              <input type="email" className="w-full border border-gray-300 px-4 py-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="you@example.com" />
-            </div>
-            <div>
-              <label className="block text-sm text-gray-600 mb-1">Message</label>
-              <textarea className="w-full border border-gray-300 px-4 py-2 h-32 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="Write your message here..."></textarea>
-            </div>
-            <button onClick={sendEmail} type="submit" className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition">
-              Send Message
-            </button>
-          </form>
-        </div>
+       
+
       </div>
-    </section>
+    </div>
   );
 };
 

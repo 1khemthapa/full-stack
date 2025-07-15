@@ -109,12 +109,13 @@ const Login = () => {
                       </p>
                     )}
                     <p className="mt-2">
-                      Not Registered yet?{" "}
+                      Are You User?
                       <a
-                        onClick={toggleForm}
-                        className="cursor-pointer hover:text-blue-300 text-blue-500"
+                        
+                        className="cursor-pointer ml-1 hover:text-blue-300 text-blue-500"
+                        href="http://localhost:5173/login"
                       >
-                        Sign up
+                        Login Now
                       </a>
                     </p>
                   </div>

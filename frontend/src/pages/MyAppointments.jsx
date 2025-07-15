@@ -96,7 +96,7 @@ const cancelAppointment = async (appointmentId) =>{
         {!item.cancelled && <button onClick={()=>cancelAppointment(item._id)} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
           Cancel Appointment 
         </button> }
-        {item.cancelled && <p className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
+        {item.cancelled && <p onClick={()=>toast.info('Appointment Already Cancelled')} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
           Booking cancelled  
         </p>}
       </div>

@@ -9,6 +9,7 @@ const AdminContextProvider = (props) => {
     const [aToken,setAToken] = useState(localStorage.getItem('aToken')?localStorage.getItem('aToken'):'')
     const [doctors, setDoctors] = useState([])
     const [appointments,setAppointments] = useState([])
+    const [dashData, setDashData] = useState([])
     const backendUrl = import.meta.env.VITE_BACKEND_URL
 
     const getAllDoctor = async ()=>{
@@ -49,7 +50,6 @@ const AdminContextProvider = (props) => {
              
              if (data.success) {
                 setAppointments(data.appointments)  
-                console.log(data.appointments)
              } else{
                 toast.error(data.message)
              }
@@ -57,6 +57,39 @@ const AdminContextProvider = (props) => {
                 toast.error(error.message)
             }
         }
+
+        const cancelAppointment = async (appointmentId) =>{
+
+            try {
+                const {data} = await axios.post(backendUrl +'/api/admin/cancel-appointment',{appointmentId},{headers:{aToken}} )
+                 if(data.success){
+                    toast.success(data.message)
+                    getAllAppointments()
+                 } else{
+                    toast.error(error.message)
+                 }
+            } catch (error) {
+                 toast.error(error.message)
+            }
+        }
+
+   const getDashData = async () => {
+  try {
+    const {data} = await axios.get(backendUrl + '/api/admin/dashboard', {
+      headers: { aToken }
+    });
+   if (data.success) {
+       setDashData(data.data)
+       console.log(data.data)
+   } else{
+    toast.error(data.message)
+   }
+    
+  } catch (error) {
+    toast.error(error.message);
+  }
+};
+
 
     const value = {
          aToken,
@@ -66,7 +99,9 @@ const AdminContextProvider = (props) => {
          getAllDoctor,
          changeAvailability,
          appointments,setAppointments,
-         getAllAppointments
+         getAllAppointments,
+         cancelAppointment,
+         dashData,getDashData
     }
 
     return(

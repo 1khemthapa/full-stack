@@ -28,7 +28,7 @@ const navigate=useNavigate()
     //       <img className='w-full md:absolute bottom-0 h-auto rounded-lg' src={assets.header_img} alt="" />
     //     </div> */}
     // </div>
-    <div className="min-h-screen  text-gray-800">
+    <div className=" text-gray-800">
      
 
       {/* Hero Section */}
@@ -83,14 +83,7 @@ const navigate=useNavigate()
         </div>
       </section>
 
-      {/* Full-Width Image Banner */}
-      <section className="px-6 pb-20">
-        <img
-          src="https://via.placeholder.com/1200x400?text=Healthcare+Banner"
-          alt="Healthcare Visual"
-          className="w-full rounded-3xl shadow-xl object-cover"
-        />
-      </section>
+      
     </div>
   )
 }
