@@ -90,15 +90,19 @@ const cancelAppointment = async (appointmentId) =>{
 
       
       <div className='flex flex-col gap-2 justify-end items-center mt-4 md:mt-0'>
-       {!item.cancelled && <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
+        {!item.cancelled && item.payment && !item.isCompleted && <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
+          Paid
+        </button>  }
+       {!item.cancelled && item.payment &&!item.isCompleted && <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
           Pay Online
         </button> } 
-        {!item.cancelled && <button onClick={()=>cancelAppointment(item._id)} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
+        {!item.cancelled && !item.isCompleted &&<button onClick={()=>cancelAppointment(item._id)} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
           Cancel Appointment 
         </button> }
-        {item.cancelled && <p onClick={()=>toast.info('Appointment Already Cancelled')} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
+        {item.cancelled && !item.isCompleted &&<p onClick={()=>toast.info('Appointment Already Cancelled')} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
           Booking cancelled  
         </p>}
+        {item.isCompleted && <button className='sm:min-w-48 py-2 border border-green-500 rounded text-green-500'>Completed</button>}
       </div>
     </div>))
   }

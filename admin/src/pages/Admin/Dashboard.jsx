@@ -1,10 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import { AdminContext } from '../../context/AdminContext';
-import { assets } from '../../assets/assets';
+
 import { LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
+
 
 const Dashboard = () => {
   const { aToken, getDashData, dashData } = useContext(AdminContext);
+  
 
   useEffect(() => {
     if (aToken) {
@@ -81,6 +83,7 @@ const Dashboard = () => {
                       {user.address?.line1}, {user.address?.line2}
                     </td>
                   </tr>
+                  
                 ))
               ) : (
                 <tr>
@@ -88,7 +91,9 @@ const Dashboard = () => {
                     No users found
                   </td>
                 </tr>
+                
               )}
+              
             </tbody>
           </table>
         </div>

@@ -4,6 +4,7 @@ import { AdminContext } from "../context/AdminContext";
 import axios from "axios";
 import { useContext } from "react";
 import { toast } from "react-toastify";
+import { DoctorContext } from "../context/DoctorContext";
 
 const Login = () => {
   const [state, setState] = useState("Admin");
@@ -11,6 +12,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   const { setAToken, backendUrl } = useContext(AdminContext);
+
+  const {setDToken}=useContext(DoctorContext)
 
   const onSumbitHandler = async (event) => {
     event.preventDefault();
@@ -28,8 +31,21 @@ const Login = () => {
           toast.error(data.message);
         }
       } else {
+        const {data} = await axios.post(backendUrl + '/api/doctor/login',{email,password})
+        console.log("Doctor Login Data:", data);
+        if (data.success) {
+           console.log("Token:", data.token);
+          localStorage.setItem("dToken", data.token);
+          setDToken(data.token);
+          console.log(data.token)
+        } else {
+          toast.error(data.message);
+        }
       }
-    } catch (error) {}
+    } catch (error) {
+      console.error("Login error:", error);
+  toast.error("Something went wrong during login");
+    }
   };
 
   const [login, setLogin] = useState(true);
