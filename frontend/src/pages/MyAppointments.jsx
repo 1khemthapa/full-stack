@@ -4,10 +4,12 @@ import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 
 const MyAppointments = () => {
   // const appointmentToken = 1;
   const {backendUrl,token, getDoctorsData} = useContext(AppContext)
+  const navigate=useNavigate()
 
   const [appointments,setAppointments] = useState([])
   const month = ['','JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
@@ -90,7 +92,7 @@ const cancelAppointment = async (appointmentId) =>{
 
       
       <div className='flex flex-col gap-2 justify-end items-center mt-4 md:mt-0'>
-        {!item.cancelled && item.payment && !item.isCompleted && <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
+        {/* {!item.cancelled && item.payment && !item.isCompleted && <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
           Paid
         </button>  }
        {!item.cancelled && item.payment &&!item.isCompleted && <button className='text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300'>
@@ -102,7 +104,53 @@ const cancelAppointment = async (appointmentId) =>{
         {item.cancelled && !item.isCompleted &&<p onClick={()=>toast.info('Appointment Already Cancelled')} className='text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300'>
           Booking cancelled  
         </p>}
-        {item.isCompleted && <button className='sm:min-w-48 py-2 border border-green-500 rounded text-green-500'>Completed</button>}
+        {item.isCompleted && <button className='sm:min-w-48 py-2 border border-green-500 rounded text-green-500'>Completed</button>} */}
+        {item.payment ? (
+  <span className=" text-sm rounded-md py-1 px-3 bg-green-100 text-green-700 border border-green-400 hidden">
+    paid
+  </span>
+) : (
+  !item.cancelled && (
+    <button
+      onClick={() => navigate("/esewaPay", { state: { appointment: item } })}
+      className="text-sm rounded-md py-2 px-4 border border-primary text-primary hover:bg-primary hover:text-white transition duration-300"
+    >
+      Pay Online
+    </button>
+  )
+)}
+        
+        {item.payment ? (
+  <button className="text-sm rounded-md py-2 px-4 border border-green-500 text-green-500">
+    Payment Completed
+  </button>
+) : (
+  <>
+    {!item.cancelled && !item.isCompleted && (
+      <button
+        onClick={() => cancelAppointment(item._id)}
+        className="text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300"
+      >
+        Cancel Appointment
+      </button>
+    )}
+
+    {item.cancelled && !item.isCompleted && (
+      <p
+        onClick={() => toast.info("Appointment Already Cancelled")}
+        className="text-sm rounded-md py-2 px-4 border border-red-500 text-red-500 hover:bg-red-600 hover:text-white transition duration-300"
+      >
+        Booking cancelled
+      </p>
+    )}
+
+    {item.isCompleted && (
+      <button className="sm:min-w-48 py-2 border border-green-500 rounded text-green-500">
+        Completed
+      </button>
+    )}
+  </>
+)}
       </div>
     </div>))
   }

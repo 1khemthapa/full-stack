@@ -10,8 +10,10 @@ import MyAppointment from './pages/MyAppointments'
 import Appointment from './pages/Appointment'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import EsewaPay from './pages/EsewaPay'
+import PaymentSuccess from './pages/PaymentSuccess'
 
 
 const App = () => {
@@ -29,6 +31,8 @@ const App = () => {
         <Route path='/myprofile' element={<MyProfile />} />
         <Route path='/myappointment' element={<MyAppointment />} />
         <Route path='/appointment/:docId' element={<Appointment />} />
+        <Route path='/esewaPay' element={<EsewaPay />} />
+       <Route path="/payment-success" element={<PaymentSuccess />} />
        
       </Routes>
       <Footer/>

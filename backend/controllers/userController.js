@@ -264,6 +264,52 @@ const cancelAppointment = async (req, res) =>{
   }
 }  
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment}
+const updatePaymentStatus = async (req, res) => {
+  try {
+    const { transaction_uuid } = req.body;
+
+    if (!transaction_uuid) {
+      return res.status(400).json({
+        success: false,
+        message: "Transaction UUID is required",
+      });
+    }
+
+    // Use the transaction_uuid directly as appointment _id
+    const appointment = await appointmentModel.findById(transaction_uuid);
+
+    if (!appointment) {
+      return res.status(404).json({
+        success: false,
+        message: "Appointment not found",
+      });
+    }
+
+    // Check if already paid to avoid duplicate updates
+    if (appointment.payment === true) {
+      return res.status(200).json({
+        success: true,
+        message: "Payment already completed",
+      });
+    }
+
+    appointment.payment = true;
+    await appointment.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Payment status updated successfully",
+    });
+  } catch (error) {
+    console.error("Error updating payment status:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
+  }
+};
+
+
+export { registerUser, loginUser, getProfile, updateProfile, bookAppointment, listAppointment, cancelAppointment,updatePaymentStatus}
 
 

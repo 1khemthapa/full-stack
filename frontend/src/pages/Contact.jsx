@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
   import emailjs from 'emailjs-com';
-
+import { assets } from '../assets/assets';
 const Contact = () => {
 
 
@@ -31,15 +31,17 @@ const sendEmail = (e) => {
         {/* Team Members */}
         <div className="flex flex-wrap justify-center gap-8 mb-12">
           {[
-            { name: "Sandeep Adhikari", role: "CEO & Founder" },
-            { name: "Prakash Koirala", role: "Chief Technology Officer" },
-            { name: "Binita Shrestha", role: "Operations Head" },
+            { name: "Khemraj Thapa", role: "CEO & Founder", image: assets.khem },
+            { name: "Khom Khadka", role: "Chief Technology Officer",image:assets.khom },
+            { name: "Lochan Paudel", role: "Operations Head" ,image: assets.lochan},
           ].map((member, idx) => (
-            <div key={idx} className="bg-blue-50 rounded-xl shadow p-6 flex flex-col items-center w-64">
+            <div key={idx} className="bg-blue-50 rounded-xl shadow p-6 flex flex-col items-center w-64 ">
               {/* This div is for image */}
+              
+              
               <div className="w-32 h-32 rounded-full bg-gray-200 mb-4 flex items-center justify-center text-gray-500">
                 {/* Image Placeholder */}
-                IMG
+              <img src={member.image} className='w-32 h-32 rounded-full bg-gray-200 mb-4 flex items-center justify-center text-gray-500' alt="" />
               </div>
               <h3 className="text-lg font-bold text-gray-800">{member.name}</h3>
               <p className="text-sm text-blue-600">{member.role}</p>

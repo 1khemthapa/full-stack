@@ -49,6 +49,9 @@ import loginimg from './login.jpg'
 import signupimg from './signupimg.jpg'
 import profileIcon from './profile_icon.png'
 import Our_mission from './our_mission.png'
+import khem from './khem.png'
+import khom from './khom.jpg'
+import lochan from './lochan.jpg'
 
 export const assets = {
     appointment_img,
@@ -76,7 +79,10 @@ export const assets = {
     signupimg,
     profileIcon,
     Our_mission,
-    docbanner
+    docbanner,
+    khem,
+    khom, 
+    lochan
 }
   // DoctorSpecialties.jsx
 
