@@ -171,5 +171,22 @@ const updateDoctorProfile =async(req,res)=>{
    }
 }
 
+// Admin deletes doctor by ID
+const deleteDoctor = async (req, res) => {
+  try {
+    const { docId } = req.body;
 
-export {changeAvailability,doctorList ,loginDoctor,appointmentDoctor ,appointmentCancel,appointmentComplete,doctorDashboard,doctorProfile,updateDoctorProfile}
+    const doctor = await doctorModel.findById(docId);
+    if (!doctor) {
+      return res.status(404).json({ success: false, message: "Doctor not found" });
+    }
+
+    await doctorModel.findByIdAndDelete(docId);
+    res.status(200).json({ success: true, message: "Doctor deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting doctor:", error);
+    res.status(500).json({ success: false, message: "Failed to delete doctor" });
+  }
+};
+
+export {changeAvailability,doctorList ,loginDoctor,appointmentDoctor ,appointmentCancel,appointmentComplete,doctorDashboard,doctorProfile,updateDoctorProfile,deleteDoctor}
